@@ -120,7 +120,7 @@ response = restli_client.finder(
     }
   },
   version_string="202212",
-  acccess_token=<THREE_LEGGED_ACCESS_TOKEN>
+  access_token=<THREE_LEGGED_ACCESS_TOKEN>
 )
 ad_accounts = response.elements
 ```
