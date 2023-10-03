@@ -5,6 +5,10 @@ from linkedin_api.clients.restli.types import RestliEntity, EncodedEntityId
 from warnings import warn
 
 
+class GuidanceWarning(Warning):
+    pass
+
+
 class Paging:
     def __init__(
         self,
@@ -103,9 +107,7 @@ class CollectionResponse(BaseRestliResponse):
         super().__init__(
             status_code=status_code, headers=headers, url=url, response=response
         )
-        if elements is None:
-            warn(f"There are no elements in response:\n{response.json()}")
-        self.elements = elements
+        self._elements = elements
         """
     The list of entities returned in the response.
     """
@@ -119,6 +121,15 @@ class CollectionResponse(BaseRestliResponse):
         """
     Optional response metadata object
     """
+
+    @property
+    def elements(self):
+        if self._elements is None:
+            warn(
+                f"Possible error as there are no elements in the response:\n{self.response.json()}",
+                GuidanceWarning,
+            )
+        return self._elements
 
 
 class BatchFinderResult:
