@@ -29,6 +29,17 @@ class Paging:
 
 
 class BaseRestliResponse(BaseResponse):
+    def json(self) -> Dict[str, Any]:
+        return self.response.json()
+
+    @property
+    def text(self) -> str:
+        return self.response.text
+
+    @property
+    def content(self) -> bytes:
+        return self.response.content
+
     pass
 
 
