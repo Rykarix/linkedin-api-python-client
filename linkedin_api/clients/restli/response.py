@@ -2,6 +2,7 @@ from typing import Dict, Optional, Any, Union, List
 from requests import Response
 from linkedin_api.clients.common.response import BaseResponse
 from linkedin_api.clients.restli.types import RestliEntity, EncodedEntityId
+from warnings import warn
 
 
 class Paging:
@@ -91,6 +92,8 @@ class CollectionResponse(BaseRestliResponse):
         super().__init__(
             status_code=status_code, headers=headers, url=url, response=response
         )
+        if elements is None:
+            warn(f"There are no elements in response:\n{response.json()}")
         self.elements = elements
         """
     The list of entities returned in the response.
